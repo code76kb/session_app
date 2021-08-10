@@ -1,0 +1,5 @@
+export const LOADING = "LOADING";
+export const GENERATE_SLOTS = "GENERATE_SLOTS"; 
+export const UPDATE_SLOTS = "UPDATE_SLOTS"; 
+export const SET_BOOKING_SLOT_INDEX = "SET_BOOKING_SLOT_INDEX";
+export const BOOK_SLOT = "BOOK_SLOT";
