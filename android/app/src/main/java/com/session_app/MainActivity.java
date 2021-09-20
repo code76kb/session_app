@@ -1,4 +1,4 @@
-package com.tmp_1;
+package com.session_app;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "tmp_1";
+    return "session_app";
   }
 }

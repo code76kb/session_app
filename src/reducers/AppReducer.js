@@ -1,24 +1,28 @@
 import {
-  SET_BOOKING_SLOT_INDEX,
-  UPDATE_SLOTS,
+  TOGGLE_SESSION,
+  SET_SESSION,
+  MARK_BACKGROUND_TIME
 } from "../actions/ActionTypes";
 
 const initialState = {
-  slots:[],
-  bookingSlotIndex:{
-    index:null,
-  },
+    isSessionActive:false,
+    backGroundTime:Date.now(),
 }
 
 const appReducer = (state = initialState, action)=>{
+  console.log('Reducer :'+JSON.stringify(action));
   switch (action.type) {
 
-    case UPDATE_SLOTS: {
-        return {...state, slots:action.data }
+    case TOGGLE_SESSION: {
+        return {...state, isSessionActive: !state.isSessionActive }
     }
 
-    case SET_BOOKING_SLOT_INDEX: {
-      return {...state, bookingSlotIndex: action.data}
+    case SET_SESSION:{
+      return {...state, isSessionActive: action.data }
+    }
+
+    case MARK_BACKGROUND_TIME:{
+      return {...state, backGroundTime: action.data }
     }
 
     default :{

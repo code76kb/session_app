@@ -7,8 +7,8 @@ import appReducer from "./AppReducer";
 const persistConfig = {
   key:'test_app_root',
   storage:AsyncStorage,
-  whitelist:["appReducer"],//Reducer's to be saved 
-  blacklist:[]
+  whitelist:[],
+  blacklist:["appReducer"]
 }
 
 const allCombineReducers = combineReducers({appReducer});

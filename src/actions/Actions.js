@@ -1,33 +1,28 @@
 import {
-  GENERATE_SLOTS,
-  UPDATE_SLOTS,
-  BOOK_SLOT,
-  SET_BOOKING_SLOT_INDEX,
+  TOGGLE_SESSION,
+  SET_SESSION,
+  MARK_BACKGROUND_TIME,
 } from "./ActionTypes";
 
 
-export const generateSlots=()=>{
+export const toggleSession=()=>{
   return {
-    type:GENERATE_SLOTS,
+    type:TOGGLE_SESSION,
   }
 }
 
-export const updateSlots=(data)=>{
+export const setSession=(data)=>{
   return {
-    type:UPDATE_SLOTS,
-    data,
+    type:SET_SESSION,
+    data
   }
 }
 
-export const setBookingSlotIndex=(data)=>{
-  return {
-    type:SET_BOOKING_SLOT_INDEX,
-    data,
+export const markBackGroundTime=(data)=>{
+  return{
+    type: MARK_BACKGROUND_TIME,
+    data
   }
 }
-export const bookSlot=(data)=>{
-  return {
-    type:BOOK_SLOT,
-    data,
-  }
-}
+
+

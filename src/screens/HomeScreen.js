@@ -4,25 +4,53 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  Switch,
+  AppState,
 } from 'react-native';
 import { connect } from 'react-redux';
-import {generateSlots} from "../actions/Actions";
+import {toggleSession, setSession, markBackGroundTime} from "../actions/Actions";
+
+const RESET_WINDOW = 1000 * 60 * 10 // unit:MilliSecond
 
 class HomeScreen extends Component {
 
+  constructor(props){
+    super(props)
+    this.appStateChangeListener;
+  }
 
-  onclickBookAppointment=()=>{
-    this.props.dispatch(generateSlots());
-    this.props.navigation.navigate("Slots");
+
+  componentDidMount(){
+   this.appStateChangeListener = AppState.addEventListener('change',this.onAppStateChange);
+  }
+
+  componentWillUnmount(){
+    this.appStateChangeListener && this.appStateChangeListener.remove();
+  }
+
+  onAppStateChange=(newAppState)=>{
+    if(newAppState === 'background'){
+      this.props.dispatch(markBackGroundTime(Date.now()))
+    }
+    else if(newAppState === 'active'){
+      if( (Date.now()- this.props.backGroundTime) > RESET_WINDOW ){
+        console.log("HOME : Logout..");
+        this.props.dispatch(setSession(false));
+      }
+    }
+  }
+
+  toggleSwitch=()=>{
+    this.props.dispatch(toggleSession());
   }
 
   render(){
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btnBookAppoint} onPress={this.onclickBookAppointment}>
-          <Text style={styles.btnTxtBookAppoint}>{"Book Appointment"}</Text>
-        </TouchableOpacity>
+          <Text style={styles.txtSessionStatus}>{`Is session active :${this.props.isSessionActive}`}</Text>
+          <Switch 
+               onValueChange={this.toggleSwitch}
+               value={this.props.isSessionActive}/>
       </View>
     );
   }
@@ -41,14 +69,17 @@ const styles = StyleSheet.create({
     paddingVertical:16
   },
 
-  btnTxtBookAppoint:{
-    color:'white'
+  txtSessionStatus:{
+    color:'black',
+    fontWeight:'bold',
+    fontSize:18
   },
-
 });
 
 const mapStateToProps=(state)=>{
   return {
+    isSessionActive:state.appReducer.isSessionActive,
+    backGroundTime:state.appReducer.backGroundTime,
   }
 }
 
